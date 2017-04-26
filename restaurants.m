@@ -22,8 +22,8 @@ V = fliplr(V);
 U = fliplr(U);
 
 % Determine # of concepts we have both users and restaurants for
-v_concepts = length(v(1,:));
-u_concepts = length(u(1,:));
+v_concepts = length(V(1,:));
+u_concepts = length(U(1,:));
 if u_concepts < v_concepts
     concepts = u_concepts;
 else
@@ -32,14 +32,14 @@ end
 
 %Concept #1!
 disp('These users: ');
-for i=1:length(u(:,1)),
-    if abs(u(i,1)) > .5
+for i=1:length(U(:,1)),
+    if abs(U(i,1)) > .5
         disp(i);
     end
 end
 disp('Must like these restaurants: ');
-for i=1:length(v(:,1)),
-    if abs(v(i,1)) > .5
+for i=1:length(V(:,1)),
+    if abs(V(i,1)) > .5
         disp(i);
     end
 end
