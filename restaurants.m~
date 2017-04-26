@@ -93,12 +93,12 @@ function restaurants()
         U = fliplr(U);
         disp(U)
         user_concepts = U(5,:);
-        uws = (s*transpose(user_concepts));
+        disp(user_concepts);
         rest_colmns = transpose(V);
-        restws = s*rest_colmns;
-        disp(restws)
+        disp(rest_colmns)
+        hi 
         for i=1:(length(rest_colmns(1,:)))
-            disp(dot(rest_colmns(:,i), uws)/norm(rest_colmns(:,i))^2)
+            disp(dot(rest_colmns(:,i), transpose(user_concepts))/norm(rest_colmns(:,i))^2)
         end
 % 
 %         % Determine # of concepts we have both users and restaurants for
