@@ -28,7 +28,7 @@ function restaurants()
             disp(user)
             if quesnum+1 > length(restaurant_list)
                 quesnum = quesnum +1;
-                user = [user 0 0];
+                user = [user 2.75 2.75];
                 recommender(user)
             end
         end
@@ -66,64 +66,62 @@ function restaurants()
 
 
     end
-
-    function recommender(user_vals)
-        disp(transpose(user_vals))
-        a = [4 4 4 1 1;
-            5 5 5 1 1;
-            1 2 1 4 4;
-            1 1 1 5 5;
-            user_vals];
-
+ function recommender(user_vals)
+         disp(transpose(user_vals))
+         a = [4 4 4 1 1;
+             5 5 5 1 1;
+             1 2 1 4 4;
+             1 1 1 5 5;
+             user_vals];
+ 
         % use atransposea and aatranspose to find SVD breakdown
-        ata = transpose(a)*a;
-        aat = a*transpose(a);
-
-        % solve for sigma (eigenvalues)
-        e = eig(ata);
+         ata = transpose(a)*a;
+         aat = a*transpose(a);
+ 
+         % solve for sigma (eigenvalues)
+         e = eig(ata);
         s = sqrt(e);
         s = real(s);
-        s = sort(s, 'descend');
-        s = diag(s);
-
-        % solve for U and V (eigenvectors)
-        [V,~] = eig(ata);
-        [U,~] = eig(aat);
-        V = fliplr(V);
-        U = fliplr(U);
-        disp(U)
-        user_concepts = U(5,:);
-        uws = (s*transpose(user_concepts));
-        rest_colmns = transpose(V);
-        restws = s*rest_colmns;
-        disp(restws)
-        for i=1:(length(rest_colmns(1,:)))
-            disp(dot(rest_colmns(:,i), uws)/norm(rest_colmns(:,i))^2)
-        end
-% 
-%         % Determine # of concepts we have both users and restaurants for
-%         v_concepts = length(V(1,:));
-%         u_concepts = length(U(1,:));
-%         if u_concepts < v_concepts
-%             concepts = u_concepts;
-%         else
-%             concepts = v_concepts;
-%         end
-% 
-%         for j=1:concepts,
-%             %Concept #1!
-%             disp('These users: ');
-%             for i=1:length(U(:,j)),
-%                 if s(j,j)*abs(U(i,j)) > s(j,j)*.5
-%                     disp(i);
-%                 end
-%             end
-%             disp('Must like these restaurants: ');
-%             for i=1:length(V(:,j)),
-%                 if s(j,j)*abs(V(i,j)) > s(j,j)*.5
-%                     disp(i);
-%                 end
-%             end
-%         end
-    end
-end
+         s = sort(s, 'descend');
+         s = diag(s);
+ 
+         % solve for U and V (eigenvectors)
+         [V,~] = eig(ata);
+         [U,~] = eig(aat);
+         V = fliplr(V);
+         U = fliplr(U);
+         disp(U)
+         user_concepts = U(5,:);
+         disp(user_concepts);
+         rest_colmns = transpose(V);
+         disp(rest_colmns)
+         for i=1:(length(rest_colmns(1,:)))
+             disp(dot(rest_colmns(:,i), transpose(user_concepts))/norm(rest_colmns(:,i))^2)
+         end
+ % 
+ %         % Determine # of concepts we have both users and restaurants for
+ %         v_concepts = length(V(1,:));
+ %         u_concepts = length(U(1,:));
+ %         if u_concepts < v_concepts
+ %             concepts = u_concepts;
+ %         else
+ %             concepts = v_concepts;
+ %         end
+ % 
+ %         for j=1:concepts,
+ %             %Concept #1!
+ %             disp('These users: ');
+ %             for i=1:length(U(:,j)),
+ %                 if s(j,j)*abs(U(i,j)) > s(j,j)*.5
+ %                     disp(i);
+ %                 end
+ %             end
+ %             disp('Must like these restaurants: ');
+ %             for i=1:length(V(:,j)),
+%                   if s(j,j)*abs(V(i,j)) > s(j,j)*.5
+%                       disp(i);
+%                   end
+%               end
+%           end
+     end
+ end
